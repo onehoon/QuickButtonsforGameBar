@@ -67,7 +67,7 @@
                         <StackPanel Spacing="6">
                             <StackPanel Spacing="4">
                                 <TextBlock Text="Name" Foreground="#CCF7F8FB" Height="20" VerticalAlignment="Center" />
-                                <TextBox x:Name="OverlayNameTextBox" Height="40" MinHeight="40" MaxLength="24" TextChanged="OverlayNameTextBox_TextChanged" />
+                                <TextBox x:Name="OverlayNameTextBox" Height="40" MinHeight="40" MaxLength="24" Padding="10,7,10,7" TextChanged="OverlayNameTextBox_TextChanged" />
                             </StackPanel>
 
                             <Grid ColumnSpacing="8" HorizontalAlignment="Left">
