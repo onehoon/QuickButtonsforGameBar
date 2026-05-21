@@ -12,7 +12,7 @@
   <Identity
     Name="onehoon.QuickButtonsforGameBar"
     Publisher="CN=1F7B64F8-727D-460F-BC6B-347DD604F69F"
-    Version="1.1.1.0" />
+    Version="1.1.2.0" />
 
   <mp:PhoneIdentity PhoneProductId="4fac8839-76bf-47c8-be7c-57c4109e639e" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
@@ -39,7 +39,8 @@
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="Quick Buttons for Game Bar"
-        BackgroundColor="transparent">
+        BackgroundColor="transparent"
+        AppListEntry="none">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>

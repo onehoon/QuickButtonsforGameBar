@@ -57,6 +57,11 @@
             <Setter Property="Padding" Value="8,5" />
             <Setter Property="FontSize" Value="14" />
         </Style>
+        <Style x:Key="CustomShortcutButtonStyle" TargetType="Button" BasedOn="{StaticResource ShortcutButtonStyle}">
+            <Setter Property="MinHeight" Value="64" />
+            <Setter Property="Padding" Value="8,6" />
+            <Setter Property="FontSize" Value="14" />
+        </Style>
 
     </Page.Resources>
 
@@ -239,10 +244,30 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
-                                <Button Grid.Column="0" x:Name="CustomButton1" Style="{StaticResource ResolutionButtonStyle}" Click="CustomButton1_Click" Content="Not Set" />
-                                <Button Grid.Column="1" x:Name="CustomButton2" Style="{StaticResource ResolutionButtonStyle}" Click="CustomButton2_Click" Content="Not Set" />
-                                <Button Grid.Column="2" x:Name="CustomButton3" Style="{StaticResource ResolutionButtonStyle}" Click="CustomButton3_Click" Content="Not Set" />
-                                <Button Grid.Column="3" x:Name="CustomButton4" Style="{StaticResource ResolutionButtonStyle}" Click="CustomButton4_Click" Content="Not Set" />
+                                <Button Grid.Column="0" x:Name="CustomButton1" Style="{StaticResource CustomShortcutButtonStyle}" Click="CustomButton1_Click">
+                                    <StackPanel Spacing="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <TextBlock x:Name="Custom1LabelTextBlock" Text="Not Set" FontSize="14" FontWeight="SemiBold" HorizontalAlignment="Center" TextAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" />
+                                        <TextBlock x:Name="Custom1ShortcutTextBlock" Text="" FontSize="12" Opacity="0.82" HorizontalAlignment="Center" TextAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" Visibility="Collapsed" />
+                                    </StackPanel>
+                                </Button>
+                                <Button Grid.Column="1" x:Name="CustomButton2" Style="{StaticResource CustomShortcutButtonStyle}" Click="CustomButton2_Click">
+                                    <StackPanel Spacing="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <TextBlock x:Name="Custom2LabelTextBlock" Text="Not Set" FontSize="14" FontWeight="SemiBold" HorizontalAlignment="Center" TextAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" />
+                                        <TextBlock x:Name="Custom2ShortcutTextBlock" Text="" FontSize="12" Opacity="0.82" HorizontalAlignment="Center" TextAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" Visibility="Collapsed" />
+                                    </StackPanel>
+                                </Button>
+                                <Button Grid.Column="2" x:Name="CustomButton3" Style="{StaticResource CustomShortcutButtonStyle}" Click="CustomButton3_Click">
+                                    <StackPanel Spacing="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <TextBlock x:Name="Custom3LabelTextBlock" Text="Not Set" FontSize="14" FontWeight="SemiBold" HorizontalAlignment="Center" TextAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" />
+                                        <TextBlock x:Name="Custom3ShortcutTextBlock" Text="" FontSize="12" Opacity="0.82" HorizontalAlignment="Center" TextAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" Visibility="Collapsed" />
+                                    </StackPanel>
+                                </Button>
+                                <Button Grid.Column="3" x:Name="CustomButton4" Style="{StaticResource CustomShortcutButtonStyle}" Click="CustomButton4_Click">
+                                    <StackPanel Spacing="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <TextBlock x:Name="Custom4LabelTextBlock" Text="Not Set" FontSize="14" FontWeight="SemiBold" HorizontalAlignment="Center" TextAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" />
+                                        <TextBlock x:Name="Custom4ShortcutTextBlock" Text="" FontSize="12" Opacity="0.82" HorizontalAlignment="Center" TextAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" Visibility="Collapsed" />
+                                    </StackPanel>
+                                </Button>
                             </Grid>
                         </StackPanel>
                     </Border>

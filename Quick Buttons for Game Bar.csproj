@@ -23,10 +23,10 @@
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x64</AppxBundlePlatforms>
     <LangVersion>latest</LangVersion>
-    <Version>1.1.1.0</Version>
-    <AssemblyVersion>1.1.1.0</AssemblyVersion>
-    <FileVersion>1.1.1.0</FileVersion>
-    <InformationalVersion>1.1.1.0</InformationalVersion>
+    <Version>1.1.2.0</Version>
+    <AssemblyVersion>1.1.2.0</AssemblyVersion>
+    <FileVersion>1.1.2.0</FileVersion>
+    <InformationalVersion>1.1.2.0</InformationalVersion>
     <HelperOutputDir>ShortcutHelperNative\x64\Release\</HelperOutputDir>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <PackageCertificateThumbprint>EA2DB6D23B39FA067F3FDF667EF778AB5296728A</PackageCertificateThumbprint>

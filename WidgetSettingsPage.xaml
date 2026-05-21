@@ -141,6 +141,10 @@
                     <Border Background="#3033363C" CornerRadius="8" Padding="8">
                         <StackPanel Spacing="6">
                             <TextBlock Text="Custom 1" FontWeight="SemiBold" Foreground="#FFF7F8FB" />
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Label" Foreground="#CCF7F8FB" />
+                                <TextBox x:Name="Custom1LabelTextBox" Height="40" MinHeight="40" MaxLength="16" PlaceholderText="Optional label" />
+                            </StackPanel>
                             <Grid ColumnSpacing="8">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="168" />
@@ -168,6 +172,10 @@
                     <Border Background="#3033363C" CornerRadius="8" Padding="8">
                         <StackPanel Spacing="6">
                             <TextBlock Text="Custom 2" FontWeight="SemiBold" Foreground="#FFF7F8FB" />
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Label" Foreground="#CCF7F8FB" />
+                                <TextBox x:Name="Custom2LabelTextBox" Height="40" MinHeight="40" MaxLength="16" PlaceholderText="Optional label" />
+                            </StackPanel>
                             <Grid ColumnSpacing="8">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="168" />
@@ -195,6 +203,10 @@
                     <Border Background="#3033363C" CornerRadius="8" Padding="8">
                         <StackPanel Spacing="6">
                             <TextBlock Text="Custom 3" FontWeight="SemiBold" Foreground="#FFF7F8FB" />
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Label" Foreground="#CCF7F8FB" />
+                                <TextBox x:Name="Custom3LabelTextBox" Height="40" MinHeight="40" MaxLength="16" PlaceholderText="Optional label" />
+                            </StackPanel>
                             <Grid ColumnSpacing="8">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="168" />
@@ -222,6 +234,10 @@
                     <Border Background="#3033363C" CornerRadius="8" Padding="8">
                         <StackPanel Spacing="6">
                             <TextBlock Text="Custom 4" FontWeight="SemiBold" Foreground="#FFF7F8FB" />
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Label" Foreground="#CCF7F8FB" />
+                                <TextBox x:Name="Custom4LabelTextBox" Height="40" MinHeight="40" MaxLength="16" PlaceholderText="Optional label" />
+                            </StackPanel>
                             <Grid ColumnSpacing="8">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="168" />

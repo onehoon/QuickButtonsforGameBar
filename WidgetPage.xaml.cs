@@ -512,14 +512,31 @@ namespace Quick_Buttons_for_Game_Bar
             }
         }
 
-        private string GetCustomButtonText(string slotId)
+        private void ApplyCustomButtonContent(string slotId, TextBlock labelTextBlock, TextBlock shortcutTextBlock)
         {
-            if (_settings.CustomShortcuts.TryGetValue(slotId, out CustomShortcutSlot slot) && WidgetSettingsStore.IsConfigured(slot))
+            if (!_settings.CustomShortcuts.TryGetValue(slotId, out CustomShortcutSlot slot) || slot == null)
             {
-                return FormatShortcut(slot.Keys);
+                labelTextBlock.Text = "Not Set";
+                shortcutTextBlock.Text = string.Empty;
+                shortcutTextBlock.Visibility = Visibility.Collapsed;
+                return;
             }
 
-            return "Not Set";
+            string label = WidgetSettingsStore.NormalizeCustomShortcutLabel(slot.Label);
+            bool configured = WidgetSettingsStore.IsConfigured(slot);
+            string shortcutText = configured ? FormatShortcut(slot.Keys) : "Not Set";
+
+            if (!string.IsNullOrWhiteSpace(label))
+            {
+                labelTextBlock.Text = label;
+                shortcutTextBlock.Text = $"({shortcutText})";
+                shortcutTextBlock.Visibility = Visibility.Visible;
+                return;
+            }
+
+            labelTextBlock.Text = configured ? shortcutText : "Not Set";
+            shortcutTextBlock.Text = string.Empty;
+            shortcutTextBlock.Visibility = Visibility.Collapsed;
         }
 
         private void ApplySectionOrder()
@@ -560,12 +577,12 @@ namespace Quick_Buttons_for_Game_Bar
 
         private void ApplyCustomButtonsLayout()
         {
-            var allButtons = new List<(Button Button, string SlotId)>
+            var allButtons = new List<(Button Button, string SlotId, TextBlock Label, TextBlock Shortcut)>
             {
-                (CustomButton1, "custom1"),
-                (CustomButton2, "custom2"),
-                (CustomButton3, "custom3"),
-                (CustomButton4, "custom4")
+                (CustomButton1, "custom1", Custom1LabelTextBlock, Custom1ShortcutTextBlock),
+                (CustomButton2, "custom2", Custom2LabelTextBlock, Custom2ShortcutTextBlock),
+                (CustomButton3, "custom3", Custom3LabelTextBlock, Custom3ShortcutTextBlock),
+                (CustomButton4, "custom4", Custom4LabelTextBlock, Custom4ShortcutTextBlock)
             };
 
             var visibleButtons = allButtons.Where(item => IsCustomSlotEnabled(item.SlotId)).ToList();
@@ -574,7 +591,7 @@ namespace Quick_Buttons_for_Game_Bar
             foreach (var item in allButtons)
             {
                 item.Button.Visibility = Visibility.Collapsed;
-                item.Button.Content = GetCustomButtonText(item.SlotId);
+                ApplyCustomButtonContent(item.SlotId, item.Label, item.Shortcut);
                 Grid.SetColumn(item.Button, 0);
             }
 
@@ -582,7 +599,6 @@ namespace Quick_Buttons_for_Game_Bar
             {
                 CustomButtonsGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
                 visibleButtons[i].Button.Visibility = Visibility.Visible;
-                visibleButtons[i].Button.Content = GetCustomButtonText(visibleButtons[i].SlotId);
                 Grid.SetColumn(visibleButtons[i].Button, i);
             }
 

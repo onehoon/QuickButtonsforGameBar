@@ -30,6 +30,7 @@ namespace Quick_Buttons_for_Game_Bar
         internal const string TopShortcutOrderOverlayFirst = "overlayFirst";
         internal const string DefaultOverlayDisplayName = "OptiScaler Overlay";
         internal const int OverlayDisplayNameMaxLength = 24;
+        internal const int CustomShortcutLabelMaxLength = 16;
 
         internal static readonly IReadOnlyList<string> DefaultLosslessKeys = new[] { "Ctrl", "Alt", "S" };
         internal static readonly IReadOnlyList<string> DefaultOverlayKeys = new[] { "Insert" };
@@ -51,7 +52,7 @@ namespace Quick_Buttons_for_Game_Bar
         {
             return new WidgetSettings
             {
-                Version = 3,
+                Version = 4,
                 TopShortcutOrder = TopShortcutOrderLosslessFirst,
                 BuiltInLosslessKeys = new List<string>(DefaultLosslessKeys),
                 BuiltInOverlayKeys = new List<string>(DefaultOverlayKeys),
@@ -60,10 +61,10 @@ namespace Quick_Buttons_for_Game_Bar
                 HiddenSections = new List<string>(),
                 CustomShortcuts = new Dictionary<string, CustomShortcutSlot>(StringComparer.OrdinalIgnoreCase)
                 {
-                    ["custom1"] = new CustomShortcutSlot { Keys = new List<string>(), IsEnabled = true },
-                    ["custom2"] = new CustomShortcutSlot { Keys = new List<string>(), IsEnabled = true },
-                    ["custom3"] = new CustomShortcutSlot { Keys = new List<string>(), IsEnabled = true },
-                    ["custom4"] = new CustomShortcutSlot { Keys = new List<string>(), IsEnabled = true }
+                    ["custom1"] = new CustomShortcutSlot { Keys = new List<string>(), IsEnabled = true, Label = string.Empty },
+                    ["custom2"] = new CustomShortcutSlot { Keys = new List<string>(), IsEnabled = true, Label = string.Empty },
+                    ["custom3"] = new CustomShortcutSlot { Keys = new List<string>(), IsEnabled = true, Label = string.Empty },
+                    ["custom4"] = new CustomShortcutSlot { Keys = new List<string>(), IsEnabled = true, Label = string.Empty }
                 }
             };
         }
@@ -85,6 +86,7 @@ namespace Quick_Buttons_for_Game_Bar
     {
         internal List<string> Keys { get; set; } = new List<string>();
         internal bool IsEnabled { get; set; } = true;
+        internal string Label { get; set; } = string.Empty;
     }
 
     internal static class WidgetSettingsStore
@@ -140,7 +142,7 @@ namespace Quick_Buttons_for_Game_Bar
 
             var result = WidgetSettingsDefaults.Create();
             result.Version = input.Version > 0 ? input.Version : defaults.Version;
-            result.Version = Math.Max(result.Version, 3);
+            result.Version = Math.Max(result.Version, 4);
             result.TopShortcutOrder = NormalizeTopShortcutOrder(input.TopShortcutOrder);
             result.OverlayDisplayName = NormalizeOverlayDisplayName(input.OverlayDisplayName);
 
@@ -161,7 +163,8 @@ namespace Quick_Buttons_for_Game_Bar
                     result.CustomShortcuts[slotId] = new CustomShortcutSlot
                     {
                         Keys = IsValidKeys(slot.Keys) ? slot.Keys.Select(k => k.Trim()).ToList() : new List<string>(),
-                        IsEnabled = slot.IsEnabled
+                        IsEnabled = slot.IsEnabled,
+                        Label = NormalizeCustomShortcutLabel(slot.Label)
                     };
                 }
             }
@@ -336,6 +339,7 @@ namespace Quick_Buttons_for_Game_Bar
 
                 slotObj["isEnabled"] = JsonValue.CreateBooleanValue(slot.IsEnabled);
                 slotObj["keys"] = keys;
+                slotObj["label"] = JsonValue.CreateStringValue(NormalizeCustomShortcutLabel(slot.Label));
                 customRoot[slotId] = slotObj;
             }
 
@@ -426,6 +430,16 @@ namespace Quick_Buttons_for_Game_Bar
                         {
                             slot.IsEnabled = true;
                         }
+
+                        if (slotObj.TryGetValue("label", out IJsonValue labelValue) &&
+                            labelValue.ValueType == JsonValueType.String)
+                        {
+                            slot.Label = NormalizeCustomShortcutLabel(labelValue.GetString());
+                        }
+                        else
+                        {
+                            slot.Label = string.Empty;
+                        }
                     }
                 }
             }
@@ -505,6 +519,21 @@ namespace Quick_Buttons_for_Game_Bar
             if (normalized.Length > WidgetSettingsDefaults.OverlayDisplayNameMaxLength)
             {
                 normalized = normalized.Substring(0, WidgetSettingsDefaults.OverlayDisplayNameMaxLength);
+            }
+
+            return normalized;
+        }
+
+        internal static string NormalizeCustomShortcutLabel(string value)
+        {
+            string normalized = (value ?? string.Empty)
+                .Replace("\r", " ")
+                .Replace("\n", " ")
+                .Trim();
+
+            if (normalized.Length > WidgetSettingsDefaults.CustomShortcutLabelMaxLength)
+            {
+                normalized = normalized.Substring(0, WidgetSettingsDefaults.CustomShortcutLabelMaxLength);
             }
 
             return normalized;

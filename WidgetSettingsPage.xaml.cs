@@ -83,10 +83,10 @@ namespace Quick_Buttons_for_Game_Bar
                     OverlayNameTextBox.Text = WidgetSettingsStore.NormalizeOverlayDisplayName(_draft.OverlayDisplayName);
                     RefreshTopShortcutOrderComboItems(WidgetSettingsDefaults.TopShortcutOrderLosslessFirst);
 
-                    BindCustomSlot("custom1", Custom1ModifierCombo, Custom1KeyCombo, Custom1EnabledButton);
-                    BindCustomSlot("custom2", Custom2ModifierCombo, Custom2KeyCombo, Custom2EnabledButton);
-                    BindCustomSlot("custom3", Custom3ModifierCombo, Custom3KeyCombo, Custom3EnabledButton);
-                    BindCustomSlot("custom4", Custom4ModifierCombo, Custom4KeyCombo, Custom4EnabledButton);
+                    BindCustomSlot("custom1", Custom1LabelTextBox, Custom1ModifierCombo, Custom1KeyCombo, Custom1EnabledButton);
+                    BindCustomSlot("custom2", Custom2LabelTextBox, Custom2ModifierCombo, Custom2KeyCombo, Custom2EnabledButton);
+                    BindCustomSlot("custom3", Custom3LabelTextBox, Custom3ModifierCombo, Custom3KeyCombo, Custom3EnabledButton);
+                    BindCustomSlot("custom4", Custom4LabelTextBox, Custom4ModifierCombo, Custom4KeyCombo, Custom4EnabledButton);
                     RenderSectionOrder();
                     SetValidation($"Failed to load settings. Defaults were restored: {ex.Message}");
                 }
@@ -128,24 +128,25 @@ namespace Quick_Buttons_for_Game_Bar
             OverlayNameTextBox.Text = WidgetSettingsStore.NormalizeOverlayDisplayName(_draft.OverlayDisplayName);
             RefreshTopShortcutOrderComboItems(_draft.TopShortcutOrder);
 
-            BindCustomSlot("custom1", Custom1ModifierCombo, Custom1KeyCombo, Custom1EnabledButton);
-            BindCustomSlot("custom2", Custom2ModifierCombo, Custom2KeyCombo, Custom2EnabledButton);
-            BindCustomSlot("custom3", Custom3ModifierCombo, Custom3KeyCombo, Custom3EnabledButton);
-            BindCustomSlot("custom4", Custom4ModifierCombo, Custom4KeyCombo, Custom4EnabledButton);
+            BindCustomSlot("custom1", Custom1LabelTextBox, Custom1ModifierCombo, Custom1KeyCombo, Custom1EnabledButton);
+            BindCustomSlot("custom2", Custom2LabelTextBox, Custom2ModifierCombo, Custom2KeyCombo, Custom2EnabledButton);
+            BindCustomSlot("custom3", Custom3LabelTextBox, Custom3ModifierCombo, Custom3KeyCombo, Custom3EnabledButton);
+            BindCustomSlot("custom4", Custom4LabelTextBox, Custom4ModifierCombo, Custom4KeyCombo, Custom4EnabledButton);
 
             RenderSectionOrder();
             ValidationTextBlock.Visibility = Visibility.Collapsed;
             ValidationTextBlock.Text = string.Empty;
         }
 
-        private void BindCustomSlot(string slotId, ComboBox modifier, ComboBox key, Button enabledButton)
+        private void BindCustomSlot(string slotId, TextBox labelTextBox, ComboBox modifier, ComboBox key, Button enabledButton)
         {
             if (!_draft.CustomShortcuts.TryGetValue(slotId, out CustomShortcutSlot slot) || slot == null)
             {
-                slot = new CustomShortcutSlot { Keys = new List<string>(), IsEnabled = true };
+                slot = new CustomShortcutSlot { Keys = new List<string>(), IsEnabled = true, Label = string.Empty };
                 _draft.CustomShortcuts[slotId] = slot;
             }
 
+            labelTextBox.Text = WidgetSettingsStore.NormalizeCustomShortcutLabel(slot.Label);
             SplitShortcut(slot.Keys, out string currentModifier, out string currentKey);
             modifier.SelectedItem = ModifierOptions.Contains(currentModifier) ? currentModifier : "None";
             key.SelectedItem = KeyOptions.Contains(currentKey) ? currentKey : "Not Set";
@@ -293,10 +294,10 @@ namespace Quick_Buttons_for_Game_Bar
             _draft.BuiltInOverlayKeys = overlayKeys;
             _draft.OverlayDisplayName = WidgetSettingsStore.NormalizeOverlayDisplayName(OverlayNameTextBox.Text);
             _draft.TopShortcutOrder = GetSelectedTopShortcutOrder();
-            UpdateCustom("custom1", Custom1ModifierCombo, Custom1KeyCombo, Custom1EnabledButton);
-            UpdateCustom("custom2", Custom2ModifierCombo, Custom2KeyCombo, Custom2EnabledButton);
-            UpdateCustom("custom3", Custom3ModifierCombo, Custom3KeyCombo, Custom3EnabledButton);
-            UpdateCustom("custom4", Custom4ModifierCombo, Custom4KeyCombo, Custom4EnabledButton);
+            UpdateCustom("custom1", Custom1LabelTextBox, Custom1ModifierCombo, Custom1KeyCombo, Custom1EnabledButton);
+            UpdateCustom("custom2", Custom2LabelTextBox, Custom2ModifierCombo, Custom2KeyCombo, Custom2EnabledButton);
+            UpdateCustom("custom3", Custom3LabelTextBox, Custom3ModifierCombo, Custom3KeyCombo, Custom3EnabledButton);
+            UpdateCustom("custom4", Custom4LabelTextBox, Custom4ModifierCombo, Custom4KeyCombo, Custom4EnabledButton);
 
             if (!HasAnyEffectivelyVisibleSection())
             {
@@ -316,14 +317,15 @@ namespace Quick_Buttons_for_Game_Bar
             }
         }
 
-        private void UpdateCustom(string slotId, ComboBox modifier, ComboBox key, Button enabledButton)
+        private void UpdateCustom(string slotId, TextBox labelTextBox, ComboBox modifier, ComboBox key, Button enabledButton)
         {
             List<string> keys = ComposeShortcut(modifier.SelectedItem as string ?? "None", key.SelectedItem as string ?? "Not Set");
 
             _draft.CustomShortcuts[slotId] = new CustomShortcutSlot
             {
                 Keys = keys,
-                IsEnabled = IsCustomEnabledButtonOn(enabledButton)
+                IsEnabled = IsCustomEnabledButtonOn(enabledButton),
+                Label = WidgetSettingsStore.NormalizeCustomShortcutLabel(labelTextBox.Text)
             };
         }
 
